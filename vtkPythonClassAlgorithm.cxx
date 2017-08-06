@@ -1,17 +1,3 @@
-/*=========================================================================
-
-  Program:   Visualization Toolkit
-  Module:    vtkPythonAlgorithm.h
-
-  Copyright (c) Ken Martin, Will Schroeder, Bill Lorensen
-  All rights reserved.
-  See Copyright.txt or http://www.kitware.com/Copyright.htm for details.
-
-     This software is distributed WITHOUT ANY WARRANTY; without even
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
-     PURPOSE.  See the above copyright notice for more information.
-
-=========================================================================*/
 #include "vtkPython.h"
 
 #include "vtkPythonClassAlgorithm.h"
@@ -28,9 +14,7 @@
 
 /* TODO:
    Handle errors when loading module
-   Make it work with Python 2
    Handle errors when wrong module or class name
-   Reinstantiate when module name changed
  */
 
 vtkStandardNewMacro(vtkPythonClassAlgorithm);
