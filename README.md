@@ -7,13 +7,6 @@ The code can furthermore be edited with a standard editor and is easily redistri
 
 Using a Python object enables the use of parent classes to build simplified APIs (e.g. the `Algorithm` class in `example.py`). It also keeps the code for the RequestData and RequestInformation passes in one place. Finally, it might be useful to share data between Pipeline passes (for example when implementing a Reader).
 
-## Some Implementation Details
-* This class inherits from vtkPythonAlgorithm, but is unlikely to keep doing so in the future. 
-
-* The VTK algorithm objects are created with 1 optional input port and 1 output port. 
-
-* The Python module is reloaded on every `REQUEST_DATA_OBJECT` pass.
-
 ## How to compile
 Build using cmake, see the first line of CMakeLists.txt for the cmake command I use to build
 
@@ -27,6 +20,18 @@ macOS Sierra with Python 2.7.13 and 3.6.1
 4. Set Module property to "example" (there will be some waiting after this as ParaView loads the vtk python module)
 5. Set Class property to "SinSource"
 6. When displaying the resulting Source in the Line Chart View, you should see a period of a sine wave
+
+## Some Implementation Details
+* This class inherits from vtkPythonAlgorithm, but is unlikely to keep doing so in the future. 
+
+* The VTK algorithm objects are created with 1 optional input port and 1 output port. 
+
+* The Python module is reloaded on every `REQUEST_DATA_OBJECT` pass.
+
+## TODO
+* Support module names with dots
+* Error handling needs to be improved
+* Only reload/reinstantiate when source file changes
 
 ## Caveats:
 vtkPythonAlgorithm will crash if the vtk python module or one of its submodules has not been imported when the first request comes in (because no VTK classes have yet been registered with some subsystem that tries to find the matching Python class for a VTK class, or vice versa). To prevent this, always include an "import vtk" line with your modules.
