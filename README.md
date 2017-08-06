@@ -1,3 +1,6 @@
+## Goal
+This module works like the build-in "Programmable Source" and "Programmable Filter" commands, except that the Python code is kept in an external file.
+
 ## How to compile
 Build using cmake, see the first line of CMakeLists.txt for the cmake command I use to build
 
