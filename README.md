@@ -23,10 +23,9 @@ macOS Sierra with Python 2.7.13 and 3.6.1
 
 ## Some Implementation Details
 * This class inherits from vtkPythonAlgorithm, but is unlikely to keep doing so in the future. 
-
 * The VTK algorithm objects are created with 1 optional input port and 1 output port. 
-
 * The Python module is reloaded on every `REQUEST_DATA_OBJECT` pass.
+* Return values from ProcessRequest are ignored since ParaView crashes unless we return success
 
 ## TODO
 * Support module names with dots
