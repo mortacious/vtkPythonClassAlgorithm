@@ -1,0 +1,111 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="PythonClassAlgorithm"
+		 class="vtkPythonClassAlgorithm" label="Python Class">
+      <Documentation long_help="Python class" short_help="Python
+      class">Blablabla...
+      </Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkDataSet"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <IntVectorProperty command="SetNumberOfInputPorts"
+                         default_values="1"
+                         is_internal="1"
+                         name="InputPorts"
+                         number_of_elements="1">
+        <Documentation>
+	  Set the number of input ports
+        </Documentation>
+     </IntVectorProperty>
+     <IntVectorProperty command="SetNumberOfOutputPorts"
+                        default_values="1"
+                        is_internal="1"
+                        name="OutputPorts"
+                        number_of_elements="1">
+       <Documentation>
+	 Set the number of output ports
+       </Documentation>
+     </IntVectorProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values=""
+                           number_of_elements="1">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values=""
+                           number_of_elements="1">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetStringProperty"
+			   default_values=""
+			   number_of_elements_per_command="2"
+			   use_index="0"
+			   repeat_command="1"
+			   clean_command="ClearStringProperties"
+                           name="Strings"
+                           number_of_elements="0">
+       <Documentation>Parameter 1.</Documentation>
+     </StringVectorProperty>
+   </SourceProxy>
+  </ProxyGroup>
+  <ProxyGroup name="sources">
+    <SourceProxy name="PythonClassAlgorithmSource"
+		 class="vtkPythonClassAlgorithm"
+		 label="Python Class Source">
+      <Documentation long_help="Python class" short_help="Python
+      class">Blablabla...
+      </Documentation>
+      <IntVectorProperty command="SetNumberOfInputPorts"
+                         default_values="0"
+                         is_internal="1"
+                         name="InputPorts"
+                         number_of_elements="1">
+        <Documentation>
+	  Set the number of input ports
+        </Documentation>
+     </IntVectorProperty>
+     <IntVectorProperty command="SetNumberOfOutputPorts"
+                        default_values="1"
+                        is_internal="1"
+                        name="OutputPorts"
+                        number_of_elements="1">
+       <Documentation>
+	 Set the number of output ports
+       </Documentation>
+     </IntVectorProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values=""
+                           number_of_elements="1">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values=""
+                           number_of_elements="1">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetStringProperty"
+			   default_values=""
+			   number_of_elements_per_command="2"
+			   use_index="0"
+			   repeat_command="1"
+			   clean_command="ClearStringProperties"
+                           name="Properties"
+                           number_of_elements="0">
+       <Documentation>Properties.</Documentation>
+     </StringVectorProperty>
+   </SourceProxy>
+ </ProxyGroup>
+</ServerManagerConfiguration>
+
