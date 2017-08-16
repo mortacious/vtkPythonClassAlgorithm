@@ -14,19 +14,9 @@ class HDF5Reader(pvalgorithm.Algorithm):
     def __init__(self):
         self.params = { 'FileName:string': '' }
         self.h5fh = None
-        self.maxshape = [0, 0, 0]
-
-    def update_maxshape(self):
-        def update_shape(_, obj):
-            if isinstance(obj, h5py.Dataset):
-                shape = [1, 1, 1]
-                shape[-len(obj.shape):] = obj.shape
-                self.maxshape = np.maximum(self.maxshape, shape)
-            return None
-        self.h5fh.visititems(update_shape)
 
     def RequestInformation(self, vtkself, request, inputs, output):
-        print(self.params)
+#        print(self.params)
         if self.h5fh is None:
             if self.params['FileName:string'] != '':
                 self.h5fh = h5py.File(self.params['FileName:string'], 'r')
@@ -44,7 +34,7 @@ class HDF5Reader(pvalgorithm.Algorithm):
 #        mbds = vtk.MultiBlockDataSet()
         for (i, k) in enumerate(group):
             obj = group[k]
-            print(obj)
+#            print(obj)
             if isinstance(obj, h5py.Group):
                 child_mbds = vtk.vtkMultiBlockDataSet()
                 self.h5_to_mbds(obj, child_mbds)
