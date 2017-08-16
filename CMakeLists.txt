@@ -1,4 +1,4 @@
-# cmake -DVTK_DIR:PATH=/Users/bob.pepin/Documents/Paraview/ParaView-build/VTK -DParaView_DIR:PATH=$PWD/../../ParaView-build/ -DQt5_DIR:PATH=/opt/Qt-5.7.1/5.7/clang_64/lib/cmake/Qt5/ ..
+# cmake -G Ninja -DVTK_DIR:PATH=/Users/bob.pepin/Documents/Paraview/ParaView-build/VTK -DParaView_DIR:PATH=$PWD/../../ParaView-build/ -DQt5_DIR:PATH=/opt/Qt-5.7.1/5.7/clang_64/lib/cmake/Qt5/ ..
 
 cmake_minimum_required(VERSION 3.8)
  

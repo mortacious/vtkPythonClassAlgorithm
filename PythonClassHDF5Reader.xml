@@ -1,0 +1,37 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="sources">
+    <SourceProxy name="PythonClassHDF5Reader"
+		 class="vtkPythonClassAlgorithm"
+		 label="Python Class HDF5 Reader">
+      <Documentation long_help="Python class" short_help="Python
+      class">Blablabla...
+      </Documentation>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="hdf5reader"
+                           number_of_elements="1" panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="HDF5Reader"
+                           number_of_elements="1" panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="FileName" label="FileName"
+			   initial_string="FileName"
+			   command="SetStringProperty" animateable="1"
+			   default_values="" number_of_elements="1">
+       <!-- panel_visibility="never" -->
+       <FileListDomain name="files"/>
+       <Documentation>Set file name</Documentation>
+     </StringVectorProperty>
+     <!--
+     <Hints>
+       <ReaderFactory extensions="foo" file_description="Foo files"/>
+       </Hints>
+       -->
+   </SourceProxy>
+ </ProxyGroup>
+</ServerManagerConfiguration>
+

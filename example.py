@@ -7,56 +7,7 @@ from vtk import vtkDataObject, vtkMultiBlockDataSet, vtkImageData
 import paraview.vtk.numpy_interface.dataset_adapter as dsa
 import paraview.util
 
-class Algorithm(object):
-    OutputDataClass = None
-    def __init__(self):
-        self.params = {}
-
-    def FillOutputPortInformation(self, vtkself, port, info):
-        return 1
-
-    def FillInputPortInformation(self, vtkself, port, info):
-        return 1
-
-    def UpdateProperties(self, prop):
-        try:
-            for k in self.params.keys():
-                if k in prop:
-                    self.params[k] = json.loads(prop[k])
-        except:
-            print(sys.exc_info())
-
-    def Initialize(self, vtkself):
-        return
-
-    def ProcessRequest(self, vtkself, request, inputs, output):
-        try:
-            if request.Has(vtkDemandDrivenPipeline.REQUEST_DATA_OBJECT()):
-                if self.OutputDataClass is None:
-                    inobj = inputs[0].GetInformationObject(0).Get(
-                        vtkDataObject.DATA_OBJECT())
-                    try:
-                        dataobj = inobj.NewInstance()
-                    except AttributeError:
-                        raise Exception('No OutputDataClass and no input data')
-                else:
-                    dataobj = self.OutputDataClass()
-                output.GetInformationObject(0).Set(
-                    vtkDataObject.DATA_OBJECT(), dataobj)
-                vtkself.GetOutputPortInformation(0).Set(
-                    vtkDataObject.DATA_EXTENT_TYPE(), dataobj.GetExtentType())
-            if request.Has(vtkDemandDrivenPipeline.REQUEST_INFORMATION()):
-                self.RequestInformation(vtkself, request, inputs, output)
-            if request.Has(vtkDemandDrivenPipeline.REQUEST_DATA()):
-                self.RequestData(vtkself, request, inputs, output)
-        except:
-            print(sys.exc_info())
-
-    def RequestInformation(self, vtkself, request, inputs, output):
-        return
-
-    def RequestData(self, vtkself, request, inputs, output):
-        return
+from .pvalgorithm import Algorithm
 
 class SinSource(Algorithm):
     OutputDataClass = vtkImageData
