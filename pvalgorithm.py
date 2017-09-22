@@ -1,4 +1,5 @@
 import sys
+import traceback
 import json
 
 from vtk import vtkDemandDrivenPipeline, vtkDataObject
@@ -15,6 +16,7 @@ class Algorithm(object):
         return 1
 
     def UpdateProperties(self, prop):
+        print(prop)
         try:
             for kt in self.params.keys():
                 try:
@@ -35,11 +37,13 @@ class Algorithm(object):
     def ProcessRequest(self, vtkself, request, inputs, output):
         try:
             if request.Has(vtkDemandDrivenPipeline.REQUEST_DATA_OBJECT()):
+                # print(request)
                 if self.OutputDataClass is None:
                     try:
                         inobj = inputs[0].GetInformationObject(0).Get(
                             vtkDataObject.DATA_OBJECT())
                         dataobj = inobj.NewInstance()
+                        self.OutputDataClass = dataobj.__class__
                     except AttributeError:
                         raise Exception('No OutputDataClass and no input data')
                 else:
@@ -53,7 +57,7 @@ class Algorithm(object):
             if request.Has(vtkDemandDrivenPipeline.REQUEST_DATA()):
                 self.RequestData(vtkself, request, inputs, output)
         except:
-            print(sys.exc_info())
+            traceback.print_exc()
 
     def RequestInformation(self, vtkself, request, inputs, output):
         return

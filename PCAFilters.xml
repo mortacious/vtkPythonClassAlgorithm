@@ -1,0 +1,148 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="Table2Image"
+		 class="vtkPythonClassAlgorithm" label="Table To Image">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkTable"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="table2image"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="Table2Image"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+    </SourceProxy>
+    <SourceProxy name="SplitAttribute"
+		 class="vtkPythonClassAlgorithm" label="Split By Attribute">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkImageData"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="splitattr"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="AttributeSplitter"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="Attribute" label="Attribute"
+			   initial_string="attribute"
+			   command="SetStringProperty"
+			   default_values="" number_of_elements="1">
+       <Documentation>Set attribute</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="Format" label="Format"
+			   initial_string="format"
+			   command="SetStringProperty"
+			   default_values="{attr}({groupkey}={g})" number_of_elements="1">
+       <Documentation>Format string</Documentation>
+     </StringVectorProperty>
+    </SourceProxy>
+    <SourceProxy name="SplitImageData"
+		 class="vtkPythonClassAlgorithm" label="Split Image Data">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkImageData"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="splitimagedata"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="ImageDataSplitter"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="Format" label="Format"
+			   initial_string="format"
+			   command="SetStringProperty"
+			   default_values="{k}({i},{j})" number_of_elements="1">
+       <Documentation>Format string</Documentation>
+     </StringVectorProperty>
+    </SourceProxy>
+    <SourceProxy name="SQLFilter"
+		 class="vtkPythonClassAlgorithm" label="SQL Filter">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkImageData"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="sqlfilter"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="SQLFilter"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="SQL Query" label="SQL Query"
+			   initial_string="query"
+			   command="SetStringProperty"
+			   default_values="" number_of_elements="1">
+       <Documentation>SQL Query String (table name: "data")</Documentation>
+       <Hints>
+         <Widget type="multi_line" />
+       </Hints>
+     </StringVectorProperty>
+   </SourceProxy>
+ </ProxyGroup>
+</ServerManagerConfiguration>
+

@@ -46,6 +46,7 @@ void vtkPythonClassAlgorithm::PrintSelf(ostream& os, vtkIndent indent)
 vtkPythonClassAlgorithm::vtkPythonClassAlgorithm()
 {
   this->Module = 0;
+  this->Object = 0;
   this->ClassName = "";
   this->ModuleName = "";
   this->SetNumberOfInputPorts(1);
@@ -64,100 +65,16 @@ vtkPythonClassAlgorithm::~vtkPythonClassAlgorithm()
   }
 }
 
-static std::string GetPythonErrorString()
-{
-  PyObject* type;
-  PyObject* value;
-  PyObject* traceback;
-
-  // Increments refcounts for returns.
-  PyErr_Fetch(&type, &value, &traceback);
-  // Put the returns in smartpointers that will
-  // automatically decrement refcounts
-  vtkSmartPyObject sType(type);
-  vtkSmartPyObject sValue(value);
-  vtkSmartPyObject sTraceback(traceback);
-
-  if (!sType)
-  {
-    return "No error from Python?!";
-  }
-
-  std::string exc_string;
-
-  vtkSmartPyObject tbModule(PyImport_ImportModule("traceback"));
-  if (tbModule)
-  {
-    vtkSmartPyObject formatFunction(PyObject_GetAttrString(tbModule.GetPointer(), "format_exception"));
-
-    vtkSmartPyObject args(PyTuple_New(3));
-
-    Py_INCREF(sType.GetPointer()); // PyTuple steals a reference.
-    PyTuple_SET_ITEM(args.GetPointer(), 0, sType.GetPointer());
-
-    Py_INCREF(sValue.GetPointer()); // PyTuple steals a reference.
-    PyTuple_SET_ITEM(args.GetPointer(), 1, sValue.GetPointer());
-
-    Py_INCREF(sTraceback.GetPointer()); // PyTuple steals a reference.
-    PyTuple_SET_ITEM(args.GetPointer(), 2, sTraceback.GetPointer());
-
-    vtkSmartPyObject formatList(PyObject_Call(formatFunction.GetPointer(), args, NULL));
-    vtkSmartPyObject fastFormatList(PySequence_Fast(formatList.GetPointer(), "format_exception didn't return a list..."));
-
-    Py_ssize_t sz = PySequence_Size(formatList.GetPointer());
-    PyObject** lst = PySequence_Fast_ITEMS(fastFormatList.GetPointer());
-    exc_string = "\n";
-    for (Py_ssize_t i = 0; i < sz; ++i)
-    {
-      PyObject* str = lst[i];
-#ifndef VTK_PY3K
-      exc_string += PyString_AsString(str);
-#else
-      PyObject *bytes = PyUnicode_EncodeLocale(str, VTK_PYUNICODE_ENC);
-      if (bytes)
-      {
-        exc_string += PyBytes_AsString(bytes);
-        Py_DECREF(bytes);
-      }
-#endif
-    }
-  }
-  else
-  {
-    vtkSmartPyObject pyexc_string(PyObject_Str(sValue));
-    if (pyexc_string)
-    {
-#ifndef VTK_PY3K
-      exc_string = PyString_AsString(pyexc_string);
-#else
-      PyObject *bytes = PyUnicode_EncodeLocale(
-        pyexc_string, VTK_PYUNICODE_ENC);
-      if (bytes)
-      {
-        exc_string = PyBytes_AsString(bytes);
-        Py_DECREF(bytes);
-      }
-#endif
-    }
-    else
-    {
-      exc_string = "<Unable to convert Python error to string>";
-    }
-  }
-
-  PyErr_Clear();
-
-  return exc_string;
-}
-
 void vtkPythonClassAlgorithm::SetPythonModuleName(const char* name)
 {
   this->ModuleName = name;
-  this->Module = PyImport_ImportModule(this->ModuleName.c_str());
-  if(this->Module) {
-    InstantiatePython();
-  } else {
-    PyErr_Print();
+  if(this->ModuleName.length() > 0) {
+      this->Module = PyImport_ImportModule(this->ModuleName.c_str());
+      if(this->Module) {
+          InstantiatePython();
+      } else {
+          PyErr_Print();
+      }
   }
 }
 

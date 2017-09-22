@@ -7,7 +7,7 @@ from vtk import vtkDataObject, vtkMultiBlockDataSet, vtkImageData
 import paraview.vtk.numpy_interface.dataset_adapter as dsa
 import paraview.util
 
-from .pvalgorithm import Algorithm
+from pvalgorithm import Algorithm
 
 class SinSource(Algorithm):
     OutputDataClass = vtkImageData
