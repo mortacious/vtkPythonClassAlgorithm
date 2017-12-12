@@ -122,9 +122,11 @@ def numpy_to_vtk(nparray):
     vtkarray = vtk.vtkDataArray.CreateDataArray(vtktype)
     vtkarray.SetVoidArray(nparray.data, nparray.size, 1)
 
-    vtkarray.SetNumberOfTuples(np.prod(nparray.shape[0:-1]))
+    tuples = np.prod(nparray.shape[0:-1])
+    components = nparray.shape[-1]
     vtkarray.SetNumberOfComponents(nparray.shape[-1])
-
+    vtkarray.SetNumberOfTuples(np.prod(nparray.shape[0:-1]))
+    
     vtkarray.AddObserver('DeleteEvent', _MakeObserver(nparray))
     return vtkarray
 

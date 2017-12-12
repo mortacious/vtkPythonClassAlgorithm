@@ -104,6 +104,27 @@ void vtkPythonClassAlgorithm::SetStringProperty(const char* name, const char* va
     this->UpdateProperties();
 }
 
+void vtkPythonClassAlgorithm::SetDoubleProperty(const char* name, double value)
+{
+    if(!this->Module || !this->Object || !this->PropertyDict)
+	return;
+    PyObject *valobj = PyFloat_FromDouble(value);
+    PyDict_SetItemString(PropertyDict, name, valobj);
+    Py_XDECREF(valobj);
+    this->UpdateProperties();
+}
+
+void vtkPythonClassAlgorithm::SetLongProperty(const char* name, long int value)
+{
+    if(!this->Module || !this->Object || !this->PropertyDict)
+	return;
+    PyObject *valobj = PyLong_FromLong(value);
+    PyDict_SetItemString(PropertyDict, name, valobj);
+    Py_XDECREF(valobj);
+    this->UpdateProperties();
+}
+
+
 void vtkPythonClassAlgorithm::InstantiatePython()
 {
   if(!this->Module)

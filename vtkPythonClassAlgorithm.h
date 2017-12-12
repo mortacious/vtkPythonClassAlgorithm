@@ -38,6 +38,8 @@ public:
   void SetPythonClassName(const char* name);
   void SetPythonModuleName(const char* name);
   void SetStringProperty(const char* name, const char* value);
+  void SetDoubleProperty(const char* name, double value);
+  void SetLongProperty(const char* name, long int value);
   void ClearStringProperties() {
 //      std::cout << "ClearStringProperties\n";
       if(PropertyDict) {

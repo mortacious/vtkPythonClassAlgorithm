@@ -8,6 +8,7 @@ class Image(object):
         self.data = data
         self.shape = shape if shape is not None else next(iter(data.values())).shape
 
+PolyLine = collections.namedtuple('PolyLine', ['points', 'data'])
 # Image = collections.namedtuple('Image', ['data'])
 def mbds_to_tree(mbds):
     r = {}
@@ -27,7 +28,7 @@ def mbds_to_tree(mbds):
 
 def tree_to_mbds(tree):
     mbds = vtk.vtkMultiBlockDataSet()
-    for (i, (k, v)) in enumerate(tree.items()):
+    for (i, (k, v)) in enumerate((k, v) for k, v in tree.items() if v and v != {}):
         if isinstance(v, Image):
             blockimage = vtk.vtkImageData()
             blockdata = blockimage.GetPointData()
@@ -37,6 +38,27 @@ def tree_to_mbds(tree):
                 vtkarr.SetName(name)
                 blockdata.AddArray(vtkarr)
             mbds.SetBlock(i, blockimage)
+        elif isinstance(v, PolyLine):
+            poly = vtk.vtkPolyLine()
+            pids = poly.GetPointIds()
+            pids.SetNumberOfIds(v.points.shape[0])
+            for j in range(0, v.points.shape[0]):
+                pids.SetId(j, j)
+            vtkpoints = vtk.vtkPoints()
+            vtkpoints.SetData(vtknp.numpy_to_vtk(v.points))
+            # print(vtkpoints)
+            data = vtk.vtkPolyData()
+            data.SetPoints(vtkpoints)
+            data.Allocate(1, 1)
+            data.InsertNextCell(poly.GetCellType(), pids)
+            if v.data:
+                pdata = data.GetPointData()
+                # print(v.data)
+                for (name, arr) in v.data.items():
+                    vtkarr = vtknp.numpy_to_vtk(arr)
+                    vtkarr.SetName(name)
+                    pdata.AddArray(vtkarr)
+            mbds.SetBlock(i, data)
         else:
             mbds.SetBlock(i, tree_to_mbds(v))
         mbds.GetMetaData(i).Set(vtk.vtkCompositeDataSet.NAME(), k)
@@ -48,7 +70,9 @@ def map_tree(fn, tree):
     return r
 
 def map_mbds(fn, mbds):
-    return tree_to_mbds(map_tree(fn, mbds_to_tree(mbds)))
+    tree = map_tree(fn, mbds_to_tree(mbds))
+    # print(f'tree: {tree}')
+    return tree_to_mbds(tree)
 
 def map_pointdata(fn, mbds):
     tree = mbds_to_tree(mbds)

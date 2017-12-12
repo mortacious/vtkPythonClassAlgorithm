@@ -142,7 +142,86 @@
          <Widget type="multi_line" />
        </Hints>
      </StringVectorProperty>
-   </SourceProxy>
+    </SourceProxy>
+    <SourceProxy name="SplitImageComponents"
+		 class="vtkPythonClassAlgorithm" label="Split Image Components">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkImageData"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="chunkimagedata"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="ImageDataChunker"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty name="Splits" label="Splits"
+			   initial_string="splits"
+			   command="SetStringProperty"
+			   default_values="[]" number_of_elements="1">
+       <Documentation>Split positions</Documentation>
+     </StringVectorProperty>
+    </SourceProxy>
+    <SourceProxy name="Comet"
+		 class="vtkPythonClassAlgorithm" label="Comet">
+      <Documentation long_help="" short_help=""></Documentation>
+      <InputProperty
+        name="Input"
+        command="SetInputConnection">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type">
+         <DataType value="vtkImageData"/>
+       </DataTypeDomain>
+      </InputProperty>
+     <StringVectorProperty command="SetPythonModuleName"
+                           name="Module"
+			   default_values="image2polyline"
+                           number_of_elements="1"
+                           panel_visibility="never">
+        <Documentation>The Python module.</Documentation>
+     </StringVectorProperty>
+     <StringVectorProperty command="SetPythonClassName"
+                           name="Class"
+			   default_values="Image2PolyLine"
+                           number_of_elements="1"
+                           panel_visibility="never">
+       <Documentation>The Python class.</Documentation>
+     </StringVectorProperty>
+     <IntVectorProperty name="Offset" label="Offset"
+			   initial_string="offset"
+                           element_types="1"
+			   command="SetLongProperty"
+			   default_values="0" number_of_elements="1">
+       <IntRangeDomain name="range" />
+       <Documentation>Offset</Documentation>
+     </IntVectorProperty>
+     <IntVectorProperty name="Count" label="Count"
+			   initial_string="count"
+			   command="SetLongProperty"
+			   default_values="-1" number_of_elements="1">
+       <IntRangeDomain name="range" />
+       <Documentation>Count</Documentation>
+     </IntVectorProperty>
+    </SourceProxy>
  </ProxyGroup>
 </ServerManagerConfiguration>
 

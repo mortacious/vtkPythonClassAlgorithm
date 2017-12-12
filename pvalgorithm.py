@@ -24,7 +24,9 @@ class Algorithm(object):
                 except ValueError:
                     [k, t] = [kt, 'json']
                 if k in prop:
-                    if t == 'json':
+                    if isinstance(prop[k], (int, float)):
+                        self.params[kt] = prop[k]
+                    elif t == 'json':
                         self.params[kt] = json.loads(prop[k])
                     else:
                         self.params[kt] = prop[k]
