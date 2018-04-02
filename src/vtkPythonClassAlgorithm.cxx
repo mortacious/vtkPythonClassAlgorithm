@@ -1,6 +1,6 @@
 #include "vtkPython.h"
 
-#include "vtkPythonClassAlgorithm.h"
+#include "../include/vtkPythonClassAlgorithm.h"
 #include "vtkPythonAlgorithm.h"
 #include "vtkObjectFactory.h"
 

@@ -14,8 +14,8 @@
  * vtkPythonAlgorithm
 */
 
-#ifndef vtkPythonClassAlgorithm_h
-#define vtkPythonClassAlgorithm_h
+#ifndef VTKPYTHONCLASSALGORITHM_VTKPYTHONCLASSALGORITHM_H
+#define VTKPYTHONCLASSALGORITHM_VTKPYTHONCLASSALGORITHM_H
 
 #include "vtkPython.h" // Must be first
 
@@ -25,8 +25,7 @@
 #include <string>
 #include <iostream>
 
-class VTKFILTERSPYTHON_EXPORT vtkPythonClassAlgorithm : public vtkPythonAlgorithm
-{
+class VTKFILTERSPYTHON_EXPORT vtkPythonClassAlgorithm : public vtkPythonAlgorithm {
 public:
   static vtkPythonClassAlgorithm *New();
   vtkTypeMacro(vtkPythonClassAlgorithm, vtkPythonAlgorithm);
@@ -36,16 +35,18 @@ public:
    * Insert doc here
    */
   void SetPythonClassName(const char* name);
+
   void SetPythonModuleName(const char* name);
+
   void SetStringProperty(const char* name, const char* value);
+
   void SetDoubleProperty(const char* name, double value);
+  void SetDoubleProperty(const char* name, double value1, double value2);
+  void SetDoubleProperty(const char* name, double value1, double value2, double value3);
+
   void SetLongProperty(const char* name, long int value);
-  void ClearStringProperties() {
-//      std::cout << "ClearStringProperties\n";
-      if(PropertyDict) {
-	  PyDict_Clear(PropertyDict);
-      }
-  };
+  void SetLongProperty(const char* name, long int value1, long int value2);
+  void SetLongProperty(const char* name, long int value1, long int value2, long int value3);
 
 protected:
   vtkPythonClassAlgorithm();
@@ -57,7 +58,7 @@ protected:
   int FillInputPortInformation(int port, vtkInformation* info) VTK_OVERRIDE;
   int FillOutputPortInformation(int port, vtkInformation* info) VTK_OVERRIDE;
 
-  void UpdateProperties();
+  //void UpdateProperties();
   void InstantiatePython();
   
 private:
@@ -66,9 +67,9 @@ private:
   
   PyObject* Module;
   PyObject* Object;
-  PyObject* PropertyDict;
+  //PyObject* PropertyDict;
   std::string ClassName;
   std::string ModuleName;
 };
 
-#endif
+#endif // VTKPYTHONCLASSALGORITHM_VTKPYTHONCLASSALGORITHM_H
